@@ -17,6 +17,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
+    const salt = genSaltSync(10);
+    req.body.password = hashSync(req.body.password, salt);
     db.execute('SELECT * FROM user WHERE id=?', [req.params.id]).then(([rows, fieldData]) => {
         res.status(200).send(rows);
     }).catch(err => {
@@ -24,9 +26,36 @@ router.get('/:id', (req, res) => {
     })
 });
 
+// router.post('/', (req, res) => {
+//     db.execute('SELECT * FROM user where username=?', [req.params.username]).then(([rows, fieldData]) => {
+//         if(rows.length > 0)
+//         {
+//             if(rows[0].username === req.params.username)
+//             {
+//                 res.status(409).send(rows);
+
+//             }
+//         }
+//         else
+//         {
+//             db.execute("INSERT INTO user (username, password, name) VALUES (?, ?, ?)", [req.body.username, req.body.password, req.body.name]).then(([rows, fieldData]) => {
+//             res.status(200).send(rows);
+//         }).catch(err => {
+
+//         });
+//             // return bcrypt.hash(req.params.password, 12);
+//         }
+//     });
+// })
+
 router.post('/', (req, res) => {
-    User.findOne({})
-})
+        db.execute('INSERT INTO user (username, password, name) VALUES (?, ?, ?)', [req.body.username, req.body.password,req.body.name]).then(([rows, fieldData]) => {
+            res.status(200).send(rows);
+        }).catch(err =>{
+            console.log(err);
+            res.status(404).send(err);
+        });
+});
 
  router.delete('/', (req, res) => {
      db.execute("DELETE FROM user WHERE id=?", [req.body.id]).then(([rows, fieldData]) => {
