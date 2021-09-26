@@ -46,14 +46,13 @@ router.post('/register', (req, res) => {
                     message: 'Username Already exists',
                     success: false
                 });
-                next();
             }
         } else {
             db.execute('INSERT INTO user (username, password, email) VALUES (?, ?, ?)', [req.body.username, req.body.password, req.body.email]).then(([rows, fieldData]) => {
                 res.status(200).json({
                     message: "Account created successfully",
                     success: true,
-                    userId: object['insertId'],
+                    userId: rows['insertId'],
                 });
             }).catch(err => {
                 res.status(500).json({
