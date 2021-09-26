@@ -7,14 +7,6 @@ const certificates = require('./views/certificates');
 const addbiz = require('./views/addtoBiz');
 const attendance = require('./views/attendance');
 app.use(express.json());
-app.use
-
-const courses = [
-    {id: 1, name: 'English'},
-    {id: 2, name: 'PF 1'},
-    {id: 3, name: 'OOP'},
-    {id: 4, name: 'DSA'},
-];
 
 app.use('/api/admins', admins);
 app.use('/api/users', users);
@@ -38,9 +30,9 @@ app.get('/api/courses', (req, res) => {
 });
 
 app.post('/api/courses', (req, res) => {
-    
+
     const course = {
-        id: courses.length+1,
+        id: courses.length + 1,
         name: req.body.name,
     }
 
@@ -49,8 +41,8 @@ app.post('/api/courses', (req, res) => {
 })
 
 app.get('/api/courses/:id', (req, res) => {
-    const course = courses.find(c => c.id === parseInt( req.params.id));
-    if(!course) res.send("The Course id you are trying to find was not found");
+    const course = courses.find(c => c.id === parseInt(req.params.id));
+    if (!course) res.send("The Course id you are trying to find was not found");
     else res.send(course);
     res.end();
 })
