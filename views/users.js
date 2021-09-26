@@ -34,7 +34,7 @@ router.get('/:id', (req, res) => {
 });
 
 //! REGISTER ACCOUNT
-router.post('/', (req, res) => {
+router.post('/register', (req, res) => {
 
     const salt = genSaltSync(10);
     req.body.password = hashSync(req.body.password, salt);
