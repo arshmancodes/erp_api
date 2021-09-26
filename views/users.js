@@ -5,11 +5,9 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 
 router.get('/', (req, res) => {
-    
     db.execute('SELECT * FROM user').then(([rows, fieldData]) => {
         res.status(200).send(rows);
     }
-
     ).catch(err => {
         res.status(404).send(err);
 
@@ -17,8 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    const salt = genSaltSync(10);
-    req.body.password = hashSync(req.body.password, salt);
+    
     db.execute('SELECT * FROM user WHERE id=?', [req.params.id]).then(([rows, fieldData]) => {
         res.status(200).send(rows);
     }).catch(err => {

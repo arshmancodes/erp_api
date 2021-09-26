@@ -4,6 +4,8 @@ const users = require('./views/users');
 const admins = require('./views/admins');
 const history = require('./views/history');
 const certificates = require('./views/certificates');
+const addbiz = require('./views/addtoBiz');
+const attendance = require('./views/attendance');
 app.use(express.json());
 app.use
 
@@ -18,6 +20,8 @@ app.use('/api/admins', admins);
 app.use('/api/users', users);
 app.use('/api/history', history);
 app.use('/api/certificates', certificates);
+app.use('/api/addtobiz', addbiz);
+app.use('/api/attendance', attendance);
 
 app.get('/', (req, res) => {
     res.write("Hello World");

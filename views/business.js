@@ -20,6 +20,15 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/getUsers', (req, res) => {
+    db.execute('SELECT * from user WHERE biz_id=? ', [req.params.bizid]).then(([rows, fieldData]) => {
+        res.status(200).send(rows);
+    }).catch(err => {
+        res.send(err);
+        console.log(err);
+    })
+})
+
 router.post('/', (req, res) => {
     
 })
