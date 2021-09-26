@@ -80,7 +80,6 @@ router.post('/login', (req, res, next) => {
                     message: 'Login Successful',
                     success: true,
                     userId: rows[0].id,
-                    branchId: rows[0].branchid == null ? rows[0].id : rows[0].branchid,
                 });
             } else {
                 res.status(404).json({
