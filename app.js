@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const users = require('./views/users');
+const business_employee = require('./views/business');
 const admins = require('./views/admins');
 const history = require('./views/history');
 const certificates = require('./views/certificates');
@@ -10,6 +11,7 @@ app.use(express.json());
 
 app.use('/api/admins', admins);
 app.use('/api/users', users);
+app.use('/api/business-employee', business_employee);
 app.use('/api/history', history);
 app.use('/api/certificates', certificates);
 app.use('/api/addtobiz', addbiz);
