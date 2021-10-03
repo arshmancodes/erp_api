@@ -113,4 +113,40 @@ router.delete('/', (req, res) => {
 })
 
 
+//! REGISTER ACCOUNT FOR EMPLOYEE
+router.post('/register-employee', (req, res) => {
+
+    const salt = genSaltSync(10);
+    req.body.password = hashSync(req.body.password, salt);
+
+    db.execute('SELECT * FROM business_employee WHERE email = ?', [req.body.email]).then(([rows, fieldData]) => {
+        if (rows.length > 0) {
+            if (rows[0].username == req.body.username) {
+                res.status(409).json({
+                    message: 'Email Already exists',
+                    success: false
+                });
+            }
+        } else {
+            db.execute('INSERT INTO business_employee ( password, email) VALUES (?, ?, ?)', [req.body.password, req.body.email]).then(([rows, fieldData]) => {
+                res.status(200).json({
+                    message: "Employee created successfully",
+                    success: true,
+                    userId: rows['insertId'],
+                });
+            }).catch(err => {
+                res.status(500).json({
+                    message: err.message,
+                    success: false
+                });
+            });
+        }
+    }).catch(err => {
+        res.status(500).json({
+            message: err.message,
+            success: false
+        });
+    })
+});
+
 module.exports = router;
